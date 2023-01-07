@@ -1,3 +1,142 @@
+[
+    {
+        name: "California Academy of Sciences",
+        location: {
+            type: "Point",
+            coordinates: [-122.4724356, 37.7672544] //longitude, latitude
+        }
+    },
+    {
+        name: "Conservatory of flowers ",
+        location: {
+            type: "Point",
+            coordinates: [-122.4615748, 37.7701756] //longitude, latitude
+        }
+    },
+    {
+        name: "Golden gate Tennis Park",
+        location: {
+            type: "Point",
+            coordinates: [-122.4593702, 37.7705046] //longitude, latitude
+        }
+    },
+    {
+        name: "Nopa",
+        location: {
+            type: "Point",
+            coordinates: [-122.4389058, 37.7747415] //longitude, latitude
+        }
+    },
+]
+
+
+db.places.insertMany([
+    {
+        name: "California Academy of Sciences",
+        location: {
+            type: "Point",
+            coordinates: [-122.4724356, 37.7672544] //longitude, latitude
+        }
+    },
+    {
+        name: "Conservatory of flowers ",
+        location: {
+            type: "Point",
+            coordinates: [-122.4615748, 37.7701756] //longitude, latitude
+        }
+    },
+    {
+        name: "Golden gate Tennis Park",
+        location: {
+            type: "Point",
+            coordinates: [-122.4593702, 37.7705046] //longitude, latitude
+        }
+    },
+    {
+        name: "Nopa",
+        location: {
+            type: "Point",
+            coordinates: [-122.4389058, 37.7747415] //longitude, latitude
+        }
+    },
+])
+
+
+//get all places
+
+db.places.find().pretty()
+
+
+//drop collection
+
+db.places.drop()
+
+
+//get places near my location
+
+
+db.places.find({
+    location: {
+        $near: {
+            $geometry: {
+                type: "Point",
+                coordinates: [-122.471114, 37.771104]
+            },
+            $maxDistance: 550, //in meters
+            $minDistance: 10 //in meters
+        }
+    }
+}).pretty()
+
+
+db.places.createIndex({ location: "2dsphere" })
+
+
+const p1 = [-122.4547, 37.77473]
+const p2 = [-122.45303, 37.76641]
+const p3 = [-122.51026, 37.76411]
+const p4 = [-122.51088, 37.77131]
+
+db.places.find({
+    location: {
+        $geoWithin: {
+            $geometry: {
+                type: "Polygon",
+                coordinates: [[p1, p2, p3, p4, p1]]
+            }
+        }
+    }
+}).pretty()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 db.intArray.insertMany([
     {
         id: 1,
